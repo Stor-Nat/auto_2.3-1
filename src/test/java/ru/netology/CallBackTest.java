@@ -1,13 +1,10 @@
 package ru.netology;
 
-import com.github.javafaker.Faker;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
@@ -18,20 +15,11 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class CallBackTest {
 
-    private Faker faker;
-
-    @BeforeEach
-    void setUpAll() {
-        faker = new Faker(new Locale("ru"));
-    }
-
     @Test
     void shouldSubmitRequest() {
         open("http://localhost:9999");
 
-        RegistrationByCardInfo info = new RegistrationByCardInfo();
-
-        $("[data-test-id='city'] input").setValue(faker.address().cityName());
+        $("[data-test-id='city'] input").setValue(RegistrationByCardInfo.city());
 
 //        Очищаем поле ввода даты
         $("[data-test-id=date] input.input__control").doubleClick().sendKeys(Keys.BACK_SPACE);
@@ -40,9 +28,9 @@ public class CallBackTest {
 //        Ввод сгенерированной даты
         $("[data-test-id=date] input.input__control").setValue(date);
 
-        $("[data-test-id='name'] input").setValue(faker.name().fullName());
+        $("[data-test-id='name'] input").setValue(RegistrationByCardInfo.name());
 
-        $("[data-test-id='phone'] input").setValue(faker.phoneNumber().phoneNumber());
+        $("[data-test-id='phone'] input").setValue(RegistrationByCardInfo.phone());
 
         $("[data-test-id=agreement]").click();
 
